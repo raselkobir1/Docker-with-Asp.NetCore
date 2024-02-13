@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: my_sql_server
+    environment:
+      SA_PASSWORD: "Admin@123"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "49433:1433"
+    volumes:
+      - sqlserver_data:/var/opt/mssql
+    networks:
+      - my_network
+
+  redis:
+    image: redis:latest
+    container_name: my_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - my_network
+      
+  docker-tutorial:
+    image: first-dotnetcore-image
+    ports:
+      - "8089:8080"
+    environment:
+      - "ConnectionStrings__ApplicationDb=${ApplicationDB}"
+      - "ConnectionStrings__MyRedisConStr=${RedisDB}"
+    networks:
+      - my_network
+    depends_on:
+      - sqlserver
+      - redis
+
+volumes:
+  sqlserver_data:
+  redis_data:
+
+networks:
+  my_network:
+    driver: bridge

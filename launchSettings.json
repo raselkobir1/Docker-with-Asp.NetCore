@@ -1,0 +1,17 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "composeLaunchAction": "LaunchBrowser",
+      "composeLaunchServiceName": "docker-tutorial",
+      "composeLaunchUrl": "{Scheme}://localhost:{ServicePort}/swagger",
+      "serviceActions": {
+        "docker-tutorial": "StartDebugging",
+        "sqlserver": "StartWithoutDebugging",
+        "redis": "StartWithoutDebugging",
+        "dockertutorial.api": "StartDebugging"
+      }
+    }
+  }
+}
